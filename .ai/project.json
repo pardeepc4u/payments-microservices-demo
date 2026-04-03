@@ -1,0 +1,38 @@
+{
+  "project": {
+    "name": "payments-microservices-demo",
+    "type": "multi-module-maven",
+    "description": "Reference architecture for ACH/Wire payment processing using Spring Boot, Kafka, and Kubernetes"
+  },
+  "stack": {
+    "java": "17",
+    "spring-boot": "3.2.5",
+    "kafka": "3.1.4",
+    "database": "PostgreSQL",
+    "build": "Maven"
+  },
+  "modules": [
+    { "name": "common", "path": "common", "description": "Shared events, DTOs, exceptions" },
+    { "name": "payment-service", "path": "payment-service", "port": 8081, "db": "payment_db" },
+    { "name": "account-service", "path": "account-service", "port": 8082, "db": "account_db" },
+    { "name": "notification-service", "path": "notification-service", "port": 8084, "db": "notification_db" },
+    { "name": "audit-service", "path": "audit-service", "port": 8085, "db": "audit_db" },
+    { "name": "settlement-service", "path": "settlement-service", "port": 8086, "db": "settlement_db" }
+  ],
+  "conventions": {
+    "package_events": "com.payments.common.domain",
+    "package_common_dto": "com.payments.common.dto",
+    "error_response": "Java record (NOT Lombok builder)",
+    "dependency_injection": "@RequiredArgsConstructor or explicit constructors",
+    "transactions": "@Transactional on service methods modifying data"
+  },
+  "troubleshooting": {
+    "package_not_found_events": "Use com.payments.common.domain NOT com.payments.common.events",
+    "error_response_builder": "Use new ErrorResponse(...) NOT ErrorResponse.builder()",
+    "flyway_issue": "DO NOT add flyway-database-postgresql dependency"
+  },
+  "build": {
+    "verify": "mvn clean install -DskipTests",
+    "expect": "BUILD SUCCESS with all 6 modules"
+  }
+}
