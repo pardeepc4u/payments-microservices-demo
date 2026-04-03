@@ -1,0 +1,64 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: payments
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: payment-service-config
+  namespace: payments
+data:
+  SERVER_PORT: "8081"
+  SPRING_KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres.payment:5432/payments"
+  SPRING_FLYWAY_ENABLED: "true"
+  LOGGING_LEVEL_COM_PAYMENTS: "INFO"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: account-service-config
+  namespace: payments
+data:
+  SERVER_PORT: "8082"
+  SPRING_KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres.account:5432/accounts"
+  SPRING_FLYWAY_ENABLED: "true"
+  LOGGING_LEVEL_COM_PAYMENTS: "INFO"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: notification-service-config
+  namespace: payments
+data:
+  SERVER_PORT: "8084"
+  SPRING_KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres.notification:5432/notifications"
+  SPRING_FLYWAY_ENABLED: "true"
+  LOGGING_LEVEL_COM_PAYMENTS: "INFO"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: audit-service-config
+  namespace: payments
+data:
+  SERVER_PORT: "8085"
+  SPRING_KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres.audit:5432/audit"
+  SPRING_FLYWAY_ENABLED: "true"
+  LOGGING_LEVEL_COM_PAYMENTS: "INFO"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: settlement-service-config
+  namespace: payments
+data:
+  SERVER_PORT: "8086"
+  SPRING_KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres.settlement:5432/settlements"
+  SPRING_FLYWAY_ENABLED: "true"
+  LOGGING_LEVEL_COM_PAYMENTS: "INFO"
